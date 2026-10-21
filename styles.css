@@ -335,3 +335,7 @@ table.bulanan__tabel { width: 100%; border-collapse: collapse; font-size: var(--
 
 /* arab catatan */
 .catatan__arab { font-size: var(--text-2xl); }
+
+/* sumber rekaman adzan */
+.adzan__sumber { font-size: var(--text-xs); color: var(--ink-3); line-height: 1.5; }
+.adzan__sumber b { color: var(--ink-2); font-weight: 600; }

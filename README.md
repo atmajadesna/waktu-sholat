@@ -85,8 +85,9 @@ audio/        rekaman adzan (MP3)
 
 ## Kredit
 
-Rekaman adzan: **“Adhan” oleh Aishatu98**, Wikimedia Commons, lisensi
-[CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.en) (domain publik).
-Berkas dikonversi ke MP3 dengan penyelarasan kenyaringan, tanpa perubahan isi.
+Rekaman adzan: **Syaikh Kamil Najdi**, muazin Masjid Nabawi, Madinah — berkas
+`كامل نجدي` dari koleksi [*Azaan of World Mosques*](https://archive.org/details/azaan-of-world-mosques-english)
+di Internet Archive, berstatus [Public Domain Mark 1.0](https://creativecommons.org/publicdomain/mark/1.0/).
+Berkas diselaraskan kenyaringannya lalu dikonversi ke MP3 tanpa perubahan isi.
 
 Dibangun menggunakan JavaScript, CSS, dan HTML, tanpa kerangka kerja.

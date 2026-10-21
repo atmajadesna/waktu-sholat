@@ -1,0 +1,59 @@
+/* Hallmark · macrostructure: Bento Grid · tone: tenang/sakral · anchor hue: brass 78
+ * theme: Lumen (atmospheric cluster) · paper: ink-green dark · accent: brass · display: Instrument Serif
+ * genre: atmospheric · nav: N6 masthead · footer: Ft5 statement · enrichment: none (typography + SVG)
+ * pre-emit critique: P5 H5 E4 S5 R5 V5
+ */
+:root {
+  --paper: oklch(19% 0.030 158);
+  --paper-2: oklch(23% 0.032 158);
+  --paper-3: oklch(27% 0.034 158);
+  --paper-4: oklch(31% 0.034 158);
+  --line: oklch(38% 0.032 158);
+  --line-soft: oklch(32% 0.028 158);
+
+  --ink: oklch(96% 0.012 100);
+  --ink-2: oklch(84% 0.016 110);
+  --ink-3: oklch(71% 0.020 140);
+
+  --brass: oklch(82% 0.110 82);
+  --brass-dim: oklch(66% 0.086 82);
+  --brass-wash: oklch(82% 0.110 82 / 0.12);
+  --sage: oklch(78% 0.095 152);
+  --clay: oklch(68% 0.105 48);
+
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-arab: "Amiri", "Noto Naskh Arabic", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 0.9375rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.375rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.25rem;
+  --text-display: clamp(2rem, 4.6vw, 3.15rem);
+  --text-huge: clamp(2.6rem, 8vw, 4.6rem);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+
+  --radius: 14px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur: 200ms;
+  --dur-slow: 420ms;
+
+  --shadow: 0 1px 0 oklch(100% 0 0 / 0.04) inset, 0 18px 40px -28px oklch(0% 0 0 / 0.6);
+}

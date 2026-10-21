@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Waktu Sholat — jadwal, pengingat adzan, dan arah kiblat</title>
+<meta name="description" content="Jadwal sholat lima waktu yang dihitung dari posisi matahari, pengingat adzan dengan suara, hitung mundur iqamah, arah kiblat, tasbih, dan catatan harian.">
+<meta name="theme-color" content="#0f1a15">
+<meta property="og:title" content="Waktu Sholat — jadwal, pengingat adzan, arah kiblat">
+<meta property="og:description" content="Dihitung dari posisi matahari untuk kota Anda. Lengkap dengan pengingat adzan, lafaz Subuh, kompas kiblat, dan tasbih digital.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Amiri:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=4">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="bungkus">
+    <div class="masthead__atas">
+      <div>
+        <div class="merek">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+            <path d="M4 20V11a8 8 0 0 1 16 0v9"/>
+            <path d="M2 20h20"/>
+            <path d="M12 3V1.6"/>
+            <path d="M9.6 20v-4a2.4 2.4 0 0 1 4.8 0v4"/>
+          </svg>
+          Waktu Sholat
+        </div>
+        <h1>Jadwal sholat, <span>tenang</span> dan tepat.</h1>
+        <p class="masthead__ket">Dihitung dari posisi matahari pada koordinat Anda — tanpa server, tanpa pelacakan. Pilih kota, atau pakai lokasi perangkat.</p>
+      </div>
+
+      <div class="kendali-atas">
+        <div class="medan-kecil">
+          <label for="kota">Lokasi</label>
+          <select id="kota"></select>
+        </div>
+        <div class="medan-kecil">
+          <label for="metode">Metode</label>
+          <select id="metode">
+            <option value="kemenag">Kemenag RI — 20° / 18°</option>
+            <option value="mwl">Muslim World League — 18° / 17°</option>
+            <option value="isna">ISNA — 15° / 15°</option>
+            <option value="ummalqura">Umm al-Qura — 18,5° / 90 mnt</option>
+            <option value="egypt">Egyptian — 19,5° / 17,5°</option>
+          </select>
+        </div>
+        <div class="medan-kecil">
+          <label for="koreksi">Koreksi</label>
+          <input id="koreksi" type="number" min="-20" max="20" step="1" value="0" aria-label="Koreksi menit">
+        </div>
+        <div class="medan-kecil">
+          <label for="format">Format</label>
+          <select id="format">
+            <option value="24">24 jam</option>
+            <option value="12">12 jam</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="bungkus">
+  <div class="bento">
+
+    <!-- ================= HERO ================= -->
+    <section class="kartu hero" aria-labelledby="hero-nama">
+      <div class="hero__isi">
+        <div class="hero__label" id="hero-label">Sholat berikutnya</div>
+        <div class="hero__nama">
+          <h2 id="hero-nama">—</h2>
+          <span class="hero__arab" id="hero-arab"></span>
+        </div>
+        <div class="hero__jam" id="hero-jam">--.--</div>
+        <div class="hero__sisa">menuju adzan <b id="hero-sisa">--:--:--</b></div>
+
+        <div class="lafaz-subuh" id="lafaz-subuh" hidden>
+          <span class="arab">الصَّلَاةُ خَيْرٌ مِنَ النَّوْمِ</span>
+          <span class="latin">aṣ-ṣalātu khairun minan-naum — lafaz tambahan pada adzan Subuh.</span>
+        </div>
+      </div>
+
+      <div class="hero__kaki">
+        <span id="hero-tanggal">—</span>
+        <span class="hijri" id="hero-hijri"></span>
+        <span id="hero-lokasi">—</span>
+      </div>
+
+      <div class="hero__masjid" aria-hidden="true">
+        <svg viewBox="0 0 900 220" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" preserveAspectRatio="xMidYMax meet">
+          <!-- kubah utama -->
+          <path d="M372 208V128a78 78 0 0 1 156 0v80"/>
+          <path d="M450 50v-16"/><path d="M445 30a6 6 0 1 1 8 4" />
+          <!-- kubah samping -->
+          <path d="M300 208v-58a42 42 0 0 1 84 0v58"/>
+          <path d="M516 208v-58a42 42 0 0 1 84 0v58"/>
+          <path d="M342 106V96"/><path d="M558 106V96"/>
+          <!-- menara -->
+          <path d="M232 208V74"/><path d="M250 208V74"/>
+          <path d="M228 74h26l-13-16z"/>
+          <path d="M241 58V46"/>
+          <path d="M228 96h26"/><path d="M228 120h26"/>
+          <path d="M650 208V74"/><path d="M668 208V74"/>
+          <path d="M646 74h26l-13-16z"/>
+          <path d="M659 58V46"/>
+          <path d="M646 96h26"/><path d="M646 120h26"/>
+          <!-- dinding dan lengkung -->
+          <path d="M300 208h84M516 208h84"/>
+          <path d="M384 208v-44a30 30 0 0 1 66 0v44"/>
+          <path d="M450 208v-30a22 22 0 0 1 44 0v30" opacity="0.7"/>
+          <path d="M406 208v-30a22 22 0 0 1 44 0v30" opacity="0.7"/>
+          <path d="M118 208h56v-38a28 28 0 0 0-56 0z" opacity="0.5"/>
+          <path d="M726 208h56v-38a28 28 0 0 0-56 0z" opacity="0.5"/>
+          <path d="M0 208h900"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ================= JADWAL ================= -->
+    <section class="kartu jadwal" aria-labelledby="jadwal-judul">
+      <div class="kartu__judul"><span id="jadwal-judul">Jadwal hari ini</span><b id="jadwal-tanggal">—</b></div>
+      <ul class="jadwal__daftar" id="jadwal-daftar"></ul>
+    </section>
+
+    <!-- ================= ADZAN ================= -->
+    <section class="kartu adzan" aria-labelledby="adzan-judul">
+      <div class="kartu__judul"><span id="adzan-judul">Adzan</span><b id="adzan-status">siap</b></div>
+      <div class="pemutar">
+        <button class="tombol-bulat" id="putar" aria-label="Putar adzan">
+          <svg id="ikon-putar" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div class="gelombang" id="gelombang" data-aktif="tidak" aria-hidden="true"></div>
+      </div>
+      <audio id="audio" preload="none" src="audio/adzan.mp3"></audio>
+      <div class="medan-kecil">
+        <label for="volume">Volume <span id="nilai-volume">70%</span></label>
+        <input id="volume" type="range" min="0" max="100" step="5" value="70">
+      </div>
+      <label class="checklist__baris" style="padding-left:0">
+        <input type="checkbox" id="auto-adzan" checked>
+        <span>Putar otomatis saat masuk waktu</span>
+      </label>
+      <div class="medan-kecil">
+        <label for="iqamah">Jeda iqamah <span id="nilai-iqamah">10 menit</span></label>
+        <input id="iqamah" type="range" min="0" max="20" step="1" value="10">
+      </div>
+      <div class="medan-kecil">
+        <label for="pengingat">Ingatkan sebelum adzan</label>
+        <select id="pengingat">
+          <option value="0">tanpa pengingat</option>
+          <option value="5">5 menit</option>
+          <option value="10">10 menit</option>
+          <option value="15">15 menit</option>
+          <option value="20">20 menit</option>
+        </select>
+      </div>
+      <button class="tombol" id="izin-notif">Izinkan notifikasi</button>
+      <p style="font-size:0.6875rem;color:var(--ink-3)" id="iqamah-ket">Hitung mundur iqamah muncul setelah adzan diputar.</p>
+    </section>
+
+    <!-- ================= KIBLAT ================= -->
+    <section class="kartu kiblat" aria-labelledby="kiblat-judul">
+      <div class="kartu__judul"><span id="kiblat-judul">Arah kiblat</span><b id="kiblat-status">—</b></div>
+      <div class="kompas">
+        <div class="kompas__roda" id="kompas-roda">
+          <svg viewBox="0 0 100 100" width="100%" height="100%" aria-hidden="true" style="position:absolute;inset:0">
+            <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-opacity="0.18"/>
+            <circle cx="50" cy="50" r="3" fill="currentColor" fill-opacity="0.35"/>
+            <g stroke="currentColor" stroke-opacity="0.3" stroke-width="0.8">
+              <path d="M50 3v6M50 91v6M3 50h6M91 50h6"/>
+            </g>
+            <text x="50" y="16" text-anchor="middle" font-size="6" fill="currentColor" fill-opacity="0.5" font-family="Inter, sans-serif">U</text>
+            <text x="50" y="90" text-anchor="middle" font-size="6" fill="currentColor" fill-opacity="0.5" font-family="Inter, sans-serif">S</text>
+            <text x="10" y="52" text-anchor="middle" font-size="6" fill="currentColor" fill-opacity="0.5" font-family="Inter, sans-serif">B</text>
+            <text x="90" y="52" text-anchor="middle" font-size="6" fill="currentColor" fill-opacity="0.5" font-family="Inter, sans-serif">T</text>
+          </svg>
+
+          <!-- ka'bah pada derajat kiblat -->
+          <div class="kompas__kaabah" id="kompas-kaabah">
+            <svg viewBox="0 0 24 24" aria-label="Ka'bah">
+              <path d="M12 3 20 7v10l-8 4-8-4V7z" fill="#1b1b1b" stroke="#c9a227" stroke-width="1.1" stroke-linejoin="round"/>
+              <path d="M4 9.2 12 13l8-3.8" fill="none" stroke="#c9a227" stroke-width="0.9"/>
+              <path d="M12 13v8" fill="none" stroke="#c9a227" stroke-width="0.7" stroke-opacity="0.7"/>
+              <rect x="9.6" y="14.2" width="4.8" height="5.2" rx="0.6" fill="#c9a227" fill-opacity="0.85"/>
+            </svg>
+          </div>
+
+          <div class="kompas__jarum" id="kompas-jarum">
+            <svg viewBox="0 0 14 34" aria-hidden="true">
+              <path d="M7 1 12 14 7 11 2 14z" fill="currentColor"/>
+              <path d="M7 33 2 20l5 3 5-3z" fill="currentColor" fill-opacity="0.25"/>
+            </svg>
+          </div>
+        </div>
+
+        <div style="display:grid;gap:4px;min-width:0">
+          <div class="kompas__derajat" id="kiblat-derajat">—</div>
+          <div class="kompas__ket" id="kiblat-ket">dari utara sejati</div>
+          <button class="tombol tombol--halus" id="pakai-kompas">Pakai kompas</button>
+        </div>
+      </div>
+      <p style="font-size:0.6875rem;color:var(--ink-3)" id="kompas-ket">Kiblat dihitung dari koordinat Anda menuju Ka'bah (21,4225° LU 39,8262° BT).</p>
+      <div class="kiblat__info">
+        <div><span>Jarak ke Ka'bah</span><b id="kiblat-jarak">—</b></div>
+        <div><span>Arah mata angin</span><b id="kiblat-arah">—</b></div>
+      </div>
+    </section>
+
+    <!-- ================= TASBIH ================= -->
+    <section class="kartu tasbih" aria-labelledby="tasbih-judul">
+      <div class="kartu__judul"><span id="tasbih-judul">Tasbih</span><b id="tasbih-putaran">putaran 0</b></div>
+      <div class="tasbih__angka" id="tasbih-angka">0</div>
+      <div class="tasbih__target" id="tasbih-target">target 33</div>
+      <div class="baris">
+        <button class="tombol tombol--utama" id="tasbih-tambah" style="flex:1">Baca satu</button>
+        <button class="tombol" id="tasbih-reset">Reset</button>
+      </div>
+      <div class="medan-kecil">
+        <label for="tasbih-pilih">Target</label>
+        <select id="tasbih-pilih">
+          <option value="33">33 — Subhanallah</option>
+          <option value="99">99 — Asmaul Husna</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- ================= CHECKLIST ================= -->
+    <section class="kartu checklist" aria-labelledby="ceklis-judul">
+      <div class="kartu__judul"><span id="ceklis-judul">Sudah dikerjakan</span><b id="ceklis-tanggal">—</b></div>
+      <div class="checklist__daftar" id="ceklis-daftar"></div>
+      <div class="checklist__progres"><i id="ceklis-progres" style="width:0%"></i></div>
+      <div class="streak"><span>Rangkaian hari lengkap:</span> <b id="streak">0</b> <span>hari</span></div>
+      <p class="checklist__besok" id="ceklis-besok">—</p>
+    </section>
+
+    <!-- ================= CATATAN SUBUH ================= -->
+    <section class="kartu catatan" aria-labelledby="catatan-judul">
+      <div class="kartu__judul"><span id="catatan-judul">Catatan Subuh</span><b>lafaz tambahan</b></div>
+      <div class="catatan__arab">الصَّلَاةُ خَيْرٌ مِنَ النَّوْمِ</div>
+      <p><b>aṣ-ṣalātu khairun minan-naum</b> — “sholat itu lebih baik daripada tidur.”</p>
+      <p>Lafaz ini hanya diucapkan pada <b>adzan Subuh</b>, setelah “hayya ‘alal-falāḥ”. Sebagian riwayat menyebutnya diucapkan dua kali, dan sebagian ulama memakruhkan pengucapannya pada iqamah karena iqamah bukan tempat menyeru orang tidur.</p>
+      <p class="dalil">Dari Abu Hurairah, Nabi ﷺ bersabda kepada Bilal: “Jika engkau mengumandangkan adzan pada sholat Subuh, ucapkanlah: ash-shalatu khairun minan-naum.” — HR. Bukhari no. 615, Muslim no. 644.</p>
+      <p style="font-size:0.6875rem;color:var(--ink-3)">Karena itu, saat sholat berikutnya adalah Subuh, lafaz ini ditampilkan pada kartu utama dan pada baris Subuh di jadwal.</p>
+    </section>
+
+    <!-- ================= BULANAN ================= -->
+    <section class="kartu bulanan" aria-labelledby="bulanan-judul">
+      <div class="kartu__judul"><span id="bulanan-judul">Jadwal sebulan</span><b id="bulanan-nama">—</b></div>
+      <div class="tabel-bungkus">
+        <table class="bulanan__tabel">
+          <thead>
+            <tr><th>Tanggal</th><th>Imsak</th><th>Subuh</th><th>Syuruq</th><th>Dzuhur</th><th>Ashar</th><th>Maghrib</th><th>Isya</th></tr>
+          </thead>
+          <tbody id="bulanan-isi"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="kaki">
+  <div class="bungkus">
+    <p><b>Perhitungan.</b> Sudut matahari dihitung dengan algoritma astronomi standar (deklinasi dan persamaan waktu), lalu dikonversi ke waktu setempat memakai zona waktu per kota. Selisih 1–2 menit terhadap jadwal resmi dapat terjadi karena perbedaan metode dan pembulatan. Jadwal resmi Kemenag tetap menjadi acuan.</p>
+    <details class="kaki__rinci">
+      <summary>Catatan teknis, batas, dan lisensi</summary>
+      <p><b>Suara adzan.</b> Rekaman “Adhan” oleh Aishatu98, Wikimedia Commons, lisensi CC0 (domain publik). Berkas dikonversi ke MP3 tanpa perubahan isi.</p>
+      <p><b>Lafaz Subuh.</b> Tambahan “ash-shalatu khairun minan-naum” hanya pada adzan Subuh, merujuk HR. Bukhari no. 615 dan Muslim no. 644.</p>
+      <p><b>Batas.</b> Pengingat hanya berjalan selama halaman ini terbuka, karena tidak ada server dan tidak ada notifikasi latar belakang. Izin notifikasi peramban diperlukan agar pengingat tetap terlihat saat tab lain aktif.</p>
+      <p><b>Privasi.</b> Tidak ada data yang dikirim ke mana pun. Lokasi, pengaturan, dan catatan harian disimpan pada perangkat Anda.</p>
+    </details>
+    <div class="kaki__baris">
+      <span>Waktu Sholat · dibuat dengan JavaScript tanpa kerangka kerja</span>
+      <span><a href="https://atmajadesna.github.io">Portofolio</a> · <a href="https://github.com/atmajadesna/waktu-sholat">Kode sumber</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js?v=4"></script>
+</body>
+</html>

@@ -286,7 +286,11 @@
     el.heroLokasi.textContent = `${k.nama} · ${Math.abs(k.lat).toFixed(2)}° ${k.lat < 0 ? 'LS' : 'LU'} ${k.lng.toFixed(2)}° BT`;
 
     $$('.jadwal__baris').forEach((b) => {
-      b.dataset.status = b.dataset.kunci === n.kunci ? 'sekarang' : (b.dataset.status === 'sekarang' ? 'menunggu' : b.dataset.status);
+      if (b.dataset.kunci === n.kunci && !n.besok) {
+        b.dataset.status = 'sekarang';
+      } else if (b.dataset.status === 'sekarang') {
+        b.dataset.status = 'menunggu';
+      }
     });
 
     return n;

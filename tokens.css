@@ -1,24 +1,24 @@
 /* Hallmark · macrostructure: Bento Grid · tone: tenang/sakral · anchor hue: brass 78
- * theme: Lumen (atmospheric cluster) · paper: ink-green dark · accent: brass · display: Instrument Serif
+ * theme: Lumen (atmospheric cluster) · paper: midnight-blue dark · accent: brass · display: Instrument Serif
  * genre: atmospheric · nav: N6 masthead · footer: Ft5 statement · enrichment: none (typography + SVG)
  * pre-emit critique: P5 H5 E4 S5 R5 V5
  */
 :root {
-  --paper: oklch(19% 0.030 158);
-  --paper-2: oklch(23% 0.032 158);
-  --paper-3: oklch(27% 0.034 158);
-  --paper-4: oklch(31% 0.034 158);
-  --line: oklch(38% 0.032 158);
-  --line-soft: oklch(32% 0.028 158);
+  --paper: oklch(19% 0.030 265);
+  --paper-2: oklch(23% 0.032 265);
+  --paper-3: oklch(27% 0.034 265);
+  --paper-4: oklch(31% 0.034 265);
+  --line: oklch(38% 0.032 265);
+  --line-soft: oklch(32% 0.028 265);
 
   --ink: oklch(96% 0.012 100);
   --ink-2: oklch(84% 0.016 110);
-  --ink-3: oklch(71% 0.020 140);
+  --ink-3: oklch(74% 0.025 255);
 
   --brass: oklch(82% 0.110 82);
   --brass-dim: oklch(66% 0.086 82);
   --brass-wash: oklch(82% 0.110 82 / 0.12);
-  --sage: oklch(78% 0.095 152);
+  --sage: oklch(80% 0.095 245);
   --clay: oklch(68% 0.105 48);
 
   --font-display: "Instrument Serif", Georgia, serif;

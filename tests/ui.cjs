@@ -1,0 +1,30 @@
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');const assert=require('node:assert/strict');
+const url=process.env.TEST_URL||'file://'+process.cwd()+'/index.html';
+const menit=(s)=>{const m=/^(\d{2})\.(\d{2})$/.exec(s.trim());if(!m)throw Error('unexpected time '+s);return Number(m[1])*60+Number(m[2]);};
+async function bacaJadwal(p){const rows=await p.locator('#jadwal-daftar .jadwal__jam, #jadwal-daftar time').allInnerTexts();return rows.map(menit);}
+(async()=>{const b=await chromium.launch({executablePath:process.env.CHROMIUM_PATH,args:['--no-sandbox']});
+for(const w of [320,375,414,768,1280]){const p=await b.newPage({viewport:{width:w,height:900}});const errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto(url);await p.waitForTimeout(700);
+await p.locator('#kota').selectOption('solo');await p.waitForTimeout(300);
+const t=await bacaJadwal(p);assert.equal(t.length,7,'seven rows expected');
+assert.deepEqual([...t].sort((a,b)=>a-b),t,'prayer times must be in chronological order');
+assert.equal(t[0],t[1]-10,'Imsak is ten minutes before Fajr');
+assert(t[2]>t[1]&&t[2]<t[3],'Syuruq sits between Fajr and Dhuhr');
+assert(t[3]>660&&t[3]<720,'Dhuhr near solar noon for western Indonesia');
+assert(t[4]>t[3]&&t[4]<t[5]&&t[5]<t[6],'Asr, Maghrib, Isha ordered');
+assert(t[5]>1020&&t[5]<1080,'Maghrib near local sunset');
+await p.locator('#metode').selectOption('isna');await p.waitForTimeout(300);
+const isna=await bacaJadwal(p);
+assert.equal(isna[3],t[3],'Dhuhr must not depend on the twilight method');
+assert.notEqual(isna[1],t[1],'Fajr must change with the twilight method');
+assert(isna[1]>t[1],'ISNA 15 degrees gives a later Fajr than Kemenag 20 degrees');
+await p.locator('#metode').selectOption('kemenag');await p.waitForTimeout(300);
+const derajat=Number((await p.locator('#kiblat-derajat').innerText()).replace(/[^\d.-]/g,''));
+assert(derajat>290&&derajat<300,'qibla bearing from Indonesia is west-northwest');
+await p.locator('#tasbih-tambah').click();await p.locator('#tasbih-tambah').click();
+assert.equal((await p.locator('#tasbih-angka').innerText()).trim(),'2','tasbih counter increments');
+await p.reload();await p.waitForTimeout(700);
+assert.equal((await p.locator('#tasbih-angka').innerText()).trim(),'2','tasbih count persists');
+assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+assert.equal(errors.length,0);
+console.log(w,'PASS prayer order/Imsak/method independence/qibla/tasbih persistence');await p.close();}
+await b.close();})().catch(e=>{console.error(e);process.exit(1)});
